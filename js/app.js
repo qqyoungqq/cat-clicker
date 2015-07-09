@@ -17,7 +17,7 @@ var catModel = {
 for (catind in catModel.cats) {
 	$("#cat-names").append("<h4>"+catModel.cats[catind].name+"</h4>");
 }
-$("#cat-counts").append("<h5>0</h5>");
+$("#cat-counts").append("<h5></h5>");
 
 function getInd(catname) {
 	for (var i = 0, len = catModel.cats.length; i < len; i++) {
@@ -36,18 +36,15 @@ $("h4").click(function() {
 	var imgsource = catModel.cats[ind].imgSrc;
 	patCount = catModel.cats[ind].clickCount;
 	var imgContent = '<img id="cat-imgs" class="catpic"' + ' src="' + imgsource +'" alt="cat image">';
+	var countContent = '<h5>'+catModel.cats[ind].clickCount+'</h5>';
+	$("h5").replaceWith(countContent);
 	$("img").replaceWith(imgContent);
 });
 
-//$("img").on('click', 'img.test', function() {
-	//patCount++;
-//	console.log('haha');
-//	//$("h5").replaceWith(patCount);
-//});
 
 $( document ).on( 'click', '.catpic', function () {
-   patCount++;
-   console.log(patCount);
-   var countContent = '<h5>'+patCount+'</h5>';
-   $("h5").replaceWith(countContent);
+	catModel.cats[ind].clickCount++;
+	console.log(catModel.cats[ind].clickCount);
+	var countContent = '<h5>'+catModel.cats[ind].clickCount+'</h5>';
+	$("h5").replaceWith(countContent);
 });
