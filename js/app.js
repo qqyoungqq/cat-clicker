@@ -1,3 +1,4 @@
+// To do: create catclicker premium version based on MVC framework
 // cat Model 
 var catModel = {
 	cats : [
