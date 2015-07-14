@@ -1,6 +1,6 @@
 $(function() {
 
-/* ======== Model ========== */
+/* Model */
 var catModel = {
 	currentCat: null,
 	cats : [
@@ -32,7 +32,7 @@ var catModel = {
 	]
 };
 
-/* ======== Octopus ========== */
+/* Octopus */
 var octopus = {
 	getCrtCat: function() {
 		return catModel.currentCat;
@@ -58,7 +58,7 @@ var octopus = {
 	} 
 }; // end octopus 
 
-/* ======== View ========== */
+/* View  */
 var catView = {
 	init: function() {
 		catView.renderCat();
