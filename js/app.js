@@ -1,6 +1,7 @@
-// To do: create catclicker premium version based on MVC framework
-// cat Model 
+$(function() {
+/* Model */
 var catModel = {
+	currentCat: null,
 	cats : [
 		{
 			name : "Bubble",
@@ -30,40 +31,71 @@ var catModel = {
 	]
 };
 
-//function getInd: loop through catModel to find the index of the cat in catModel given the cat name
-function getInd(catname) {
-	for (var i = 0, len = catModel.cats.length; i < len; i++) {
-		if (catname == catModel.cats[i].name) {
-			return i;
+/* Octopus */
+var octopus = {
+	getCrtCat: function() {
+		return catModel.currentCat;
+	},
+
+	getCat: function() {
+		return catModel.cats;
+	},
+
+	resetCrtCat: function(cat) {
+		catModel.currentCat = cat;
+	},
+
+	updateClick: function() {
+		catModel.currentCat.clickCount++;
+		//console.log(catModel.currentCat.clickCount);
+	}, 
+
+	init: function() {
+		catModel.currentCat = catModel.cats[0];
+		catlistView.renderList();
+		catView.init();
+	} 
+}; // end octopus 
+
+/* View  */
+var catView = {
+	init: function() {
+		catView.renderCat();
+		$('.catpic').click(function() {
+			octopus.updateClick();
+			catView.renderCat();
+		});
+	}, // end init
+
+	renderCat: function() {
+		var currentCat = octopus.getCrtCat();
+		$("#cat-imgs").attr('src',currentCat.imgSrc);
+		var countMessage = 'Number of click on '+ currentCat.name + ": " + currentCat.clickCount;
+		$("#cat-counts").text(countMessage);
+	} // end renderCat
+};
+
+var catlistView = {
+	getInd: function(cats, catname) {
+		for (var i = 0, len = cats.length; i < len; i++) {
+			if (catname == cats[i].name) {
+				return i;
+			}
 		}
-	}
-}
+	}, // end getInd
 
-//display a list of cat names 
-for (catind in catModel.cats) {
-	$("#cat-names").append('<p>'+catModel.cats[catind].name+'</p>');
-}
-
-//display initial cat picture and number of click (default: the data for the first cat)
-var ind=0;
-$("#cat-imgs").attr('src',catModel.cats[ind].imgSrc);
-var countMessage = 'Number of click on '+ catModel.cats[ind].name + ": " + catModel.cats[ind].clickCount;
-$("#cat-counts").append('<p>' + countMessage + '</p>');
-
-//updata the cat display area to show the data (image and cumulative number of clicks) for the selected cat  
-$("#cat-names p").click(function() {
-	var catname=this.innerHTML;
-	ind = getInd(catname);
-	var imgsource = catModel.cats[ind].imgSrc;
-	var imgContent = '<img id="cat-imgs" class="catpic"' + ' src="' + imgsource +'" alt="cat image">';
-	var countMessage = 'Number of click on '+ catModel.cats[ind].name + ": " + catModel.cats[ind].clickCount;
-	$("#cat-counts p").text(countMessage);
-	$("img").replaceWith(imgContent);
-});
-
-//updata the number of clicks in the cat area when the cat's picture is clicked
-$( document ).on( 'click', '.catpic', function () {
-	catModel.cats[ind].clickCount++;
-	var countMessage = 'Number of click on '+ catModel.cats[ind].name + ": " + catModel.cats[ind].clickCount;
-	$("#cat-counts p").text(countMessage);
-});
+	renderList: function( ) {
+		var cats = octopus.getCat();
+		for (var i=0, len=cats.length; i<len;i++) {
+			$("#cat-names").append('<p>'+cats[i].name+'</p>');
+		} // end for loop
+		$('#cat-names p').click(function() {
+			var catname = this.innerHTML;
+			var ind = catlistView.getInd(cats,catname);
+			octopus.resetCrtCat(cats[ind]);
+			catView.renderCat();
+		}); // end click
+	} // end renderList
+};
+octopus.init();
+}); //end function 
