@@ -13,7 +13,5 @@ In the cat display area, the following should be displayed:
 * a picuture of the cat 
 * text showing the number of clicks
 
-### Instructions on how to run the application
-* Visit my Github page (http://qqyoungqq.github.io/cat-clicker/).
-* Click a cat name in the list to select a cat.  The cat display area will update to show the data for the selected cat.
-* Click the cat's picture. The number of clicks for that cat should increment. 
+Note  
+There is a Catclicker Premium Pro version which includes all the functionality of the premium version as well as adds some extra interating functionality.  Please find the pro version in the master or gh-pages branch of this repository. 
