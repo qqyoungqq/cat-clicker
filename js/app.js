@@ -47,12 +47,12 @@ var octopus = {
 
 	updateClick: function() {
 		catModel.currentCat.clickCount++;
-		//console.log(catModel.currentCat.clickCount);
+		catView.renderCat();
 	}, 
 
 	init: function() {
 		catModel.currentCat = catModel.cats[0];
-		catlistView.renderList();
+		catlistView.init();
 		catView.init();
 	} 
 }; // end octopus 
@@ -60,11 +60,10 @@ var octopus = {
 /* View  */
 var catView = {
 	init: function() {
-		catView.renderCat();
 		$('.catpic').click(function() {
 			octopus.updateClick();
-			catView.renderCat();
 		});
+		catView.renderCat();
 	}, // end init
 
 	renderCat: function() {
@@ -73,28 +72,25 @@ var catView = {
 		var countMessage = 'Number of click on '+ currentCat.name + ": " + currentCat.clickCount;
 		$("#cat-counts").text(countMessage);
 	} // end renderCat
-};
+}; 
 
 var catlistView = {
-	getInd: function(cats, catname) {
-		for (var i = 0, len = cats.length; i < len; i++) {
-			if (catname == cats[i].name) {
-				return i;
-			}
-		}
-	}, // end getInd
+	init: function() {
+		this.catListElem = $('#cat-list');
+		this.renderList();
+	},
 
-	renderList: function( ) {
+	renderList: function() {
 		var cats = octopus.getCat();
 		for (var i=0, len=cats.length; i<len;i++) {
-			$("#cat-names").append('<p>'+cats[i].name+'</p>');
+			$("#cat-list").append('<p>'+cats[i].name+'</p>');
+			$('#cat-list p').last().click((function(catCopy) {
+				return function() {
+					octopus.resetCrtCat(catCopy);
+					catView.renderCat();
+				};
+			})(cats[i]));
 		} // end for loop
-		$('#cat-names p').click(function() {
-			var catname = this.innerHTML;
-			var ind = catlistView.getInd(cats,catname);
-			octopus.resetCrtCat(cats[ind]);
-			catView.renderCat();
-		}); // end click
 	} // end renderList
 };
 octopus.init();
