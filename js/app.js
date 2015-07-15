@@ -82,13 +82,13 @@ var catView = {
 	init: function() {
 		$('.catpic').click(function() {
 			octopus.updateClick();
+			catadminView.render();
 		});
 		catView.renderCat();
 	}, // end init
 
 	renderCat: function() {
 		var currentCat = octopus.getCrtCat().cat;
-		//$("#cat-imgs").attr('src',currentCat.imgSrc);
 		$("#cat-imgs").attr('src',currentCat.imgURL);
 		var countMessage = 'Number of click on '+ currentCat.name + ": " + currentCat.clickCount;
 		$("#cat-counts").text(countMessage);
@@ -119,6 +119,7 @@ var catlistView = {
 var catadminView = {
 	init: function() {
 		$('form').hide();
+		this.render();
 		$('#admin-button').click(function() {
 			octopus.openForm();
 		});// end click
@@ -142,7 +143,17 @@ var catadminView = {
 			octopus.updateModel(newCat,ind);
 			catlistView.renderList();
 		});// end click		
-	} // end init
+	}, // end init
+
+	render: function() {
+			var currentCat = octopus.getCrtCat().cat;
+			var curname = currentCat.name;
+			var cururl = currentCat.imgURL;
+			var curcount = currentCat.clickCount;
+			$('#catname').val(curname);
+			$('#caturl').val(cururl);
+			$('#catcount').val(curcount);
+	}
 }; // end catadminView 
 octopus.init();
 }); //end function 
