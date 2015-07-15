@@ -110,6 +110,7 @@ var catlistView = {
 				return function() {
 					octopus.resetCrtCat(catCopy,icopy);
 					catView.renderCat();
+					catadminView.render();
 				};
 			})(cats[i],i));
 		} // end for loop
