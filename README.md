@@ -13,5 +13,4 @@ In the cat display area, the following should be displayed:
 * a picuture of the cat 
 * text showing the number of clicks
 
-Note  
-There is a Catclicker Premium Pro version which includes all the functionality of the premium version as well as adds some extra interating functionality.  Please find the pro version in the master or gh-pages branch of this repository. 
+Note that there is a Catclicker Premium Pro version which includes all the functionality of the premium version as well as adds some extra interating functionality.  Please find the pro version in the master or gh-pages branch of this repository. 
